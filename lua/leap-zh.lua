@@ -1,5 +1,4 @@
 local ut = require("jb_utils")
-local jieba = require("jieba")
 local flypy_table = require("flypy")
 local M = {}
 
@@ -46,22 +45,22 @@ local parse = function()
 	return parsed
 end
 
-local parse_jieba = function()
-	local cum_l = 1
-	local parsed = {}
-	local str = vim.api.nvim_get_current_line()
-	local row = vim.api.nvim_win_get_cursor(0)[1]
-	local col = vim.api.nvim_win_get_cursor(0)[2]
-	local tokens = jieba.lcut(str, false, true)
-	for _, tok in ipairs(tokens) do
-		local i = cum_l
-		cum_l = cum_l + #tok
-		if #tok >= 6 and i > col then
-			parsed[#parsed + 1] = { pos = { row, i } }
-		end
-	end
-	return parsed
-end
+-- local parse_jieba = function()
+-- 	local cum_l = 1
+-- 	local parsed = {}
+-- 	local str = vim.api.nvim_get_current_line()
+-- 	local row = vim.api.nvim_win_get_cursor(0)[1]
+-- 	local col = vim.api.nvim_win_get_cursor(0)[2]
+-- 	local tokens = jieba.lcut(str, false, true)
+-- 	for _, tok in ipairs(tokens) do
+-- 		local i = cum_l
+-- 		cum_l = cum_l + #tok
+-- 		if #tok >= 6 and i > col then
+-- 			parsed[#parsed + 1] = { pos = { row, i } }
+-- 		end
+-- 	end
+-- 	return parsed
+-- end
 
 local function get_char()
 	local i = 1
@@ -116,10 +115,10 @@ M.leap_zh_bak = function()
 	})
 end
 
-M.leap_jieba = function()
-	require("leap").leap({
-		targets = parse_jieba(),
-	})
-end
+-- M.leap_jieba = function()
+-- 	require("leap").leap({
+-- 		targets = parse_jieba(),
+-- 	})
+-- end
 
 return M
